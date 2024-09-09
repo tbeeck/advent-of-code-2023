@@ -39,7 +39,7 @@
   [line]
   (+ (* (first-digit line) 10) (last-digit line)))
 
-(defn -main [& args]
+(defn -main [&]
   (let [lines (read-lines)]
     (doseq [l lines] (println (parse-num l)))
     (println (reduce + (map parse-num lines)))))
