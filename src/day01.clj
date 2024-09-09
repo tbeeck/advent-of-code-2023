@@ -39,7 +39,8 @@
   [line]
   (+ (* (first-digit line) 10) (last-digit line)))
 
-(defn -main [&]
+#_{:clj-kondo/ignore [:unused-binding]}
+(defn -main [& args]
   (let [lines (read-lines)]
     (doseq [l lines] (println (parse-num l)))
     (println (reduce + (map parse-num lines)))))

@@ -4,6 +4,7 @@
   []
   (doall (line-seq (java.io.BufferedReader. *in*))))
 
-(defn -main [&]
+#_{:clj-kondo/ignore [:unused-binding]}
+(defn -main [& args]
   (let [lines (read-lines)] 
     (println lines)))
