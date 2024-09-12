@@ -8,21 +8,24 @@
                   "green" 13
                   "blue" 14})
 
-(def pair-pattern (re-pattern #"(\s(\d+) (blue|red|green),?)"))
-(def group-pattern (re-pattern (str pair-pattern "{1,3}(;|\n)")))
-;; #"(\s(\d+) (red|green|blue),?){1,3}(;|\n)"
+(def pair-pattern (re-pattern #"\s(\d+) (blue|red|green),?"))
+(def group-pattern (re-pattern (str "(" pair-pattern "){1,3}(;|\n)")))
 (println group-pattern)
 
-(defn line-to-maximums
-    [line]
-    1)
+(defn line-to-groups
+  [line]
+  (re-seq pair-pattern
+        (first (first (re-seq group-pattern line)))))
 
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn -main [& args]
   (let [lines (read-lines)]
-    (doseq [l lines
-            :let [groups (re-seq group-pattern l)]]
-      (doseq [group groups
-              :let [pairs (re-seq pair-pattern (first group))]]
-          (println group pairs)))
-    (println (map line-to-maximums lines))))
+    (doseq [line lines]
+      (println line (line-to-groups line)))))
+;; (defn -main [& args]
+;;   (let [lines (read-lines)]
+;;     (doseq [l lines
+;;             :let [groups (re-seq group-pattern l)]]
+;;       (doseq [group groups
+;;               :let [pairs (re-seq pair-pattern (first group))]]
+;;           (println (first group) (map first pairs))))))
