@@ -14,8 +14,9 @@
 
 (defn line-to-groups
   [line]
-  (re-seq pair-pattern
-        (first (first (re-seq group-pattern line)))))
+    (println (re-seq group-pattern line))
+    (re-seq pair-pattern
+            (first (first (re-seq group-pattern line)))))
 
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn -main [& args]
