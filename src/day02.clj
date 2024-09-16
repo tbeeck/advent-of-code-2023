@@ -23,15 +23,14 @@
 (defn group-to-map
   [group]
   (let [matches (re-seq pair-pattern (first group))]
-    (into {}
-          (map
-           (fn [item]
-             (let [color (first item)
+    (->> matches
+         (map (fn [match] 
+                (reverse (take-last 2 match))))
+         (map (fn [item]
+              (let [color (first item)
                    count (Integer/parseInt (second item))]
-               [(keyword color) count]))
-           (map
-            (fn [match] (reverse (take-last 2 match)))
-            matches)))))
+               [(keyword color) count])))
+        (into {}))))
 
 ; return list of maps of cubes found in each round of a game
 (defn game-rounds
