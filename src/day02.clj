@@ -41,11 +41,13 @@
 ; return the id of the game if it's invalid or 0 if it's valid
 (defn game-valid
   [line]
-  (let [id (re-find #"Game (\d+)" line)
+  (let [id (last (re-find #"Game (\d+)" line))
         rounds (game-rounds line)]
-    (if (every? round-valid rounds)
-      0
-      (Integer/parseInt id))))
+    (println id rounds)
+    (if
+     (every? round-valid rounds)
+      (Integer/parseInt id)
+      0)))
 
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn -main [& args]
