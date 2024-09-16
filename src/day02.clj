@@ -52,7 +52,10 @@
 (defn game-power 
   [line]
   (let [rounds (game-rounds line)]
-    (reduce * (vals (apply merge-with max rounds)))))
+    (->> rounds
+         (apply merge-with max)
+         (vals)
+         (reduce *))))
 
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn -main [& args]
