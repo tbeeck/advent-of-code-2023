@@ -11,7 +11,7 @@
 (def pair-pattern (re-pattern #"\s(\d+) (blue|red|green),?"))
 (def round-pattern (re-pattern (str "(" pair-pattern "){1,3}[;\n]?")))
 
-; round is the map. Is this an OK grouping?
+; check if round cubes fit with total number of cubes
 (defn round-valid
   [round]
   (every?
@@ -19,6 +19,7 @@
      (<= v (get cube-counts k)))
    round))
 
+; Turn group match into dictionary of cube counts
 (defn group-to-map
   [group]
   (let [matches (re-seq pair-pattern (first group))]
@@ -38,7 +39,7 @@
   (let [groups (re-seq round-pattern line)]
     (map group-to-map groups)))
 
-; return the id of the game if it's invalid or 0 if it's valid
+; return the id of the game if it's valid or 0 if it's invalid
 (defn game-valid
   [line]
   (let [id (last (re-find #"Game (\d+)" line))
