@@ -44,13 +44,18 @@
   [line]
   (let [id (last (re-find #"Game (\d+)" line))
         rounds (game-rounds line)]
-    (println id rounds)
     (if
      (every? round-valid rounds)
       (Integer/parseInt id)
       0)))
 
+(defn game-power 
+  [line]
+  (let [rounds (game-rounds line)]
+    (reduce * (vals (apply merge-with max rounds)))))
+
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn -main [& args]
   (let [lines (read-lines)]
-    (println (reduce + (map game-valid lines)))))
+    (println (reduce + (map game-valid lines)))
+    (println (reduce + (map game-power lines)))))
